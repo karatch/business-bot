@@ -18,4 +18,3 @@ def get_settings() -> Settings:
     return settings
 
 settings = get_settings()
-print(settings)
