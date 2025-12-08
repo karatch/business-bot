@@ -3,13 +3,20 @@ import logging, sys
 
 from aiogram import Dispatcher, Bot, F
 from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from bot.config import settings
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+main_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='Каталог')],
+        [KeyboardButton(text='Оформить заявку')],
+        [KeyboardButton(text='Связаться с менеджером')]
+    ]
+)
 
 dp = Dispatcher()
 
@@ -17,7 +24,8 @@ dp = Dispatcher()
 async def start(message: Message) -> None:
     await message.answer(
         'Hello! This is a simple bot.\n'
-        'Используйте меню ниже, чтобы посмотреть каталог или оставить заявку.'
+        'Используйте меню ниже, чтобы посмотреть каталог или оставить заявку.',
+        reply_markup=main_menu
     )
 
 
