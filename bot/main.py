@@ -7,7 +7,11 @@ from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
+# памятное хранилище, в продакшене необходимо использовать Redis etc..
+from aiogram.fsm.storage.memory import MemoryStorage
+
 from bot.config import settings
+from bot.handlers import orders
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 main_menu = ReplyKeyboardMarkup(
@@ -19,7 +23,8 @@ main_menu = ReplyKeyboardMarkup(
     resize_keyboard=True,
 )
 
-dp = Dispatcher()
+dp = Dispatcher(storage=MemoryStorage())
+dp.include_router(orders.router)
 
 @dp.message(CommandStart())
 async def start(message: Message) -> None:
@@ -30,7 +35,7 @@ async def start(message: Message) -> None:
     )
 
 
-@dp.message(F.text)
+@dp.message(F.text == 'echo')
 async def echo(message: Message) -> None:
     await message.answer(f'echo: {message.text}')
 
