@@ -15,7 +15,8 @@ main_menu = ReplyKeyboardMarkup(
         [KeyboardButton(text='Каталог')],
         [KeyboardButton(text='Оформить заявку')],
         [KeyboardButton(text='Связаться с менеджером')]
-    ]
+    ],
+    resize_keyboard=True,
 )
 
 dp = Dispatcher()
