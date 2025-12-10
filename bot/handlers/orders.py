@@ -8,7 +8,7 @@ from bot.config import settings
 # маршрутизатор для обработки входящих сообщений
 router = Router()
 
-# форма заявки
+# группа состояний для сбора информации о заявке
 class OrderForm(StatesGroup):
     name = State()
     contact = State()
@@ -35,6 +35,7 @@ async def order_contact(message: Message, state: FSMContext) -> None:
 async def order_comment(message: Message, state: FSMContext):
     await state.update_data(comment=message.text.strip())
     data = await state.get_data()
+    # очищение состояния
     await state.clear()
 
     text = (
